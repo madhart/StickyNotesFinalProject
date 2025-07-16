@@ -3,6 +3,7 @@
  * Functions for saving and loading notes from localStorage
  */
 
+
 const STORAGE_KEY = 'quicknotes_data';
 
 /**

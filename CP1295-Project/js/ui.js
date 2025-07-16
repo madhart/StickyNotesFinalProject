@@ -3,7 +3,7 @@
  * Functions for handling the user interface elements and interactions
  */
 
-import { createNote } from './notes.js';
+import { createNote, NoteManager } from './notes.js';
 import { saveNotes, exportNotesAsJson } from './storage.js';
 
 /**
@@ -13,6 +13,8 @@ import { saveNotes, exportNotesAsJson } from './storage.js';
 export function initializeUI(noteManager) {
     const noteBoard = document.getElementById('note-board');
     const exportBtn = document.getElementById('export-btn');
+    const ascBtn = document.getElementById('ascending-btn');
+    const desBtn = document.getElementById('descending-btn');
 
     // Double click on board to create a new note
     noteBoard.addEventListener('dblclick', (event) => {
@@ -25,6 +27,16 @@ export function initializeUI(noteManager) {
     // Export button click handler
     exportBtn.addEventListener('click', () => {
         exportNotes(noteManager);
+    });
+
+    // Sort (ascending) button click handler
+    ascBtn.addEventListener('click', () => {
+        sortByAsc(noteManager);
+    });
+
+    // Sort (descending) button click handler
+    desBtn.addEventListener('click', () => {
+        sortByDesc(noteManager);
     });
 
     // Setup auto-save timer
@@ -197,6 +209,51 @@ export function exportNotes(noteManager) {
     exportNotesAsJson(notes);
 }
 
+/**
+ * Sort the notes by their timestamp in ascending order
+ * @param {NoteManager} noteManager - The note manager instance
+ */
+export function sortByAsc(noteManager){
+    const notes = noteManager.getAllNotes();
+    let len = notes.length;
+    const arrayOfDates = [];
+    const convertToDateObj = [];
+    const toMS = []
+    for (let i = 0; i < len; i++) {
+        arrayOfDates.push(notes[i].dateStamp);
+    }
+    for (let i = 0; i < len; i++) {
+        convertToDateObj.push(new Date(arrayOfDates[i]));
+    }
+     for (let i = 0; i < len; i++) {
+        toMS.push(Date.parse(convertToDateObj[i]));
+    }
+   toMS.sort(function(a, b){return a-b});
+   console.log(toMS);
+}
+
+/**
+ * Sort the notes by their timestamp in descending order
+ * @param {NoteManager} noteManager - The note manager instance
+ */
+export function sortByDesc(noteManager){
+    const notes = noteManager.getAllNotes();
+    let len = notes.length;
+    const arrayOfDates = [];
+    const convertToDateObj = [];
+    const toMS = []
+    for (let i = 0; i < len; i++) {
+        arrayOfDates.push(notes[i].dateStamp);
+    }
+    for (let i = 0; i < len; i++) {
+        convertToDateObj.push(new Date(arrayOfDates[i]));
+    }
+     for (let i = 0; i < len; i++) {
+        toMS.push(Date.parse(convertToDateObj[i]));
+    }
+   toMS.sort(function(a, b){return b-a});
+   console.log(toMS);
+}
 /**
  * Setup auto-save functionality
  * @param {NoteManager} noteManager - The note manager instance

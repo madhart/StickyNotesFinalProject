@@ -118,7 +118,8 @@ export class Note {
             content: this.content,
             x: this.x,
             y: this.y,
-            color: this.color
+            color: this.color,
+            dateStamp: this.dateStamp
         };
     }
 
@@ -202,6 +203,8 @@ export class NoteManager {
         return this.getAllNotes().map(note => note.toObject());
     }
 }
+
+
 
 // Export a factory function for creating a new note
 export function createNote(options = {}) {
