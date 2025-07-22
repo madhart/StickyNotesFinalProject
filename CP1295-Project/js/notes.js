@@ -108,6 +108,11 @@ export class Note {
         }
     }
 
+    toArray() {
+        const noteArray = Object.values(this)
+        return noteArray;
+    }
+
     /**
      * Convert note to plain object for storage
      * @returns {Object} Plain object representation of the note
@@ -201,6 +206,32 @@ export class NoteManager {
      */
     toJSON() {
         return this.getAllNotes().map(note => note.toObject());
+    }
+
+    sortByAscending() {
+        let oldNotes = [];
+        let sortedNotes = [];
+        oldNotes = this.getAllNotes();
+        sortedNotes = this.getAllNotes().sort(function(a, b){return (new Date(a.dateStamp))-(new Date(b.dateStamp))});
+        console.log(oldNotes);
+        console.log(sortedNotes);
+        for (let i = 0; i < oldNotes.length; i++) {
+            this.removeNote(oldNotes[i].id);
+            this.addNote(sortedNotes[i]);
+        }
+    }
+
+    sortByDescending() {
+        let oldNotes = [];
+        let sortedNotes = [];
+        oldNotes = this.getAllNotes();
+        sortedNotes = this.getAllNotes().sort(function(a, b){return (new Date(b.dateStamp))-(new Date(a.dateStamp))});
+        console.log(oldNotes);
+        console.log(sortedNotes);
+        for (let i = 0; i < oldNotes.length; i++) {
+            this.removeNote(oldNotes[i].id);
+            this.addNote(sortedNotes[i]);
+        }
     }
 }
 

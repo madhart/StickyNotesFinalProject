@@ -4,7 +4,7 @@
  */
 
 import { createNote, NoteManager } from './notes.js';
-import { saveNotes, exportNotesAsJson } from './storage.js';
+import { saveNotes, exportNotesAsJson, clearNotes } from './storage.js';
 
 /**
  * Initialize UI event listeners
@@ -210,51 +210,6 @@ export function exportNotes(noteManager) {
 }
 
 /**
- * Sort the notes by their timestamp in ascending order
- * @param {NoteManager} noteManager - The note manager instance
- */
-export function sortByAsc(noteManager){
-    const notes = noteManager.getAllNotes();
-    let len = notes.length;
-    const arrayOfDates = [];
-    const convertToDateObj = [];
-    const toMS = []
-    for (let i = 0; i < len; i++) {
-        arrayOfDates.push(notes[i].dateStamp);
-    }
-    for (let i = 0; i < len; i++) {
-        convertToDateObj.push(new Date(arrayOfDates[i]));
-    }
-     for (let i = 0; i < len; i++) {
-        toMS.push(Date.parse(convertToDateObj[i]));
-    }
-   toMS.sort(function(a, b){return a-b});
-   console.log(toMS);
-}
-
-/**
- * Sort the notes by their timestamp in descending order
- * @param {NoteManager} noteManager - The note manager instance
- */
-export function sortByDesc(noteManager){
-    const notes = noteManager.getAllNotes();
-    let len = notes.length;
-    const arrayOfDates = [];
-    const convertToDateObj = [];
-    const toMS = []
-    for (let i = 0; i < len; i++) {
-        arrayOfDates.push(notes[i].dateStamp);
-    }
-    for (let i = 0; i < len; i++) {
-        convertToDateObj.push(new Date(arrayOfDates[i]));
-    }
-     for (let i = 0; i < len; i++) {
-        toMS.push(Date.parse(convertToDateObj[i]));
-    }
-   toMS.sort(function(a, b){return b-a});
-   console.log(toMS);
-}
-/**
  * Setup auto-save functionality
  * @param {NoteManager} noteManager - The note manager instance
  */
@@ -285,4 +240,41 @@ export function renderAllNotes(noteManager) {
         setupNoteEventListeners(noteElement, note, noteManager);
         noteBoard.appendChild(noteElement);
     });
+    console.log("checking that renderAllNotes is being called correctly.");
+}
+
+/**
+ * Sort the notes by their timestamp in ascending order
+ * @param {NoteManager} noteManager - The note manager instance
+ * @param {Note} note - The note instance
+ */
+export function sortByAsc(noteManager){
+    noteManager.sortByAscending();
+    renderAllNotes(noteManager);
+    let sortedNotes = [];
+    sortedNotes = noteManager.getAllNotes();
+    let x= 450;
+    let y= 100;
+    for(let i =0; i<sortedNotes.length; i++) {
+        y += 50;
+        sortedNotes[i].updatePosition(x,y);
+    }
+}
+
+/**
+ * Sort the notes by their timestamp in descending order
+ * @param {NoteManager} noteManager - The note manager instance
+ * @param {Note} note - The note instance
+ */
+export function sortByDesc(noteManager){
+    noteManager.sortByDescending();
+    renderAllNotes(noteManager);
+    let sortedNotes = [];
+    sortedNotes = noteManager.getAllNotes();
+    let x= 450;
+    let y= 100;
+    for(let i =0; i<sortedNotes.length; i++) {
+        y += 50;
+        sortedNotes[i].updatePosition(x,y);
+    }
 }
