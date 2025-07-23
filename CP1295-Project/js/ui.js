@@ -253,8 +253,8 @@ export function sortByAsc(noteManager){
     renderAllNotes(noteManager);
     let sortedNotes = [];
     sortedNotes = noteManager.getAllNotes();
-    let x= 450;
-    let y= 100;
+    let x= 550;
+    let y= 0;
     for(let i =0; i<sortedNotes.length; i++) {
         y += 50;
         sortedNotes[i].updatePosition(x,y);
@@ -271,8 +271,8 @@ export function sortByDesc(noteManager){
     renderAllNotes(noteManager);
     let sortedNotes = [];
     sortedNotes = noteManager.getAllNotes();
-    let x= 450;
-    let y= 100;
+    let x= 550;
+    let y= 0;
     for(let i =0; i<sortedNotes.length; i++) {
         y += 50;
         sortedNotes[i].updatePosition(x,y);

@@ -217,7 +217,9 @@ export class NoteManager {
         console.log(sortedNotes);
         for (let i = 0; i < oldNotes.length; i++) {
             this.removeNote(oldNotes[i].id);
-            this.addNote(sortedNotes[i]);
+        }
+        for (let i = 0; i < sortedNotes.length; i++) {
+            this.addNote(sortedNotes[i]);  
         }
     }
 
@@ -230,7 +232,9 @@ export class NoteManager {
         console.log(sortedNotes);
         for (let i = 0; i < oldNotes.length; i++) {
             this.removeNote(oldNotes[i].id);
-            this.addNote(sortedNotes[i]);
+        }
+        for (let i = 0; i < sortedNotes.length; i++) {
+            this.addNote(sortedNotes[i]);  
         }
     }
 }
