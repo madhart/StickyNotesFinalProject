@@ -92,6 +92,7 @@ export function createNewNote(x, y, noteManager) {
 export function setupNoteEventListeners(noteElement, note, noteManager) {
     // Get elements
     const contentElement = noteElement.querySelector('.note-content');
+    const imageElement = noteElement.querySelector('.image-content');
     const deleteButton = noteElement.querySelector('.delete-btn');
     const quoteButton = noteElement.querySelector('.quote-btn');
     const imageBtn = noteElement.querySelector('.image-btn');
@@ -113,6 +114,12 @@ export function setupNoteEventListeners(noteElement, note, noteManager) {
 
     imageBtn.addEventListener('click', () => {
         fileButton.click();
+        fileButton.onchange = function(){
+            const inputImg = document.createElement("img");
+            imageElement.appendChild(inputImg);
+            inputImg.setAttribute("id","inputImg");
+            inputImg.src = URL.createObjectURL(fileButton.files[0]);
+        }
     });
     
     // Quote button handler
