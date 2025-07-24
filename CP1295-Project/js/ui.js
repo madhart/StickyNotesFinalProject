@@ -94,6 +94,8 @@ export function setupNoteEventListeners(noteElement, note, noteManager) {
     const contentElement = noteElement.querySelector('.note-content');
     const deleteButton = noteElement.querySelector('.delete-btn');
     const quoteButton = noteElement.querySelector('.quote-btn');
+    const imageBtn = noteElement.querySelector('.image-btn');
+    const fileButton = noteElement.querySelector('#fileButton');
     
     // Track whether the note is being dragged
     let isDragging = false;
@@ -107,6 +109,10 @@ export function setupNoteEventListeners(noteElement, note, noteManager) {
     // Delete button handler
     deleteButton.addEventListener('click', () => {
         deleteNote(noteElement, note, noteManager);
+    });
+
+    imageBtn.addEventListener('click', () => {
+        fileButton.click();
     });
     
     // Quote button handler
