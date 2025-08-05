@@ -112,14 +112,20 @@ export function setupNoteEventListeners(noteElement, note, noteManager) {
         deleteNote(noteElement, note, noteManager);
     });
 
+    // image button handler
     imageBtn.addEventListener('click', () => {
         fileButton.click();
         fileButton.onchange = function(){
-            const inputImg = document.createElement("img");
-            imageElement.appendChild(inputImg);
-            inputImg.setAttribute("id","inputImg");
-            inputImg.src = URL.createObjectURL(fileButton.files[0]);
-        }
+            const fileImage = fileButton.files[0];
+            if (fileImage) {
+                const imageURL = URL.createObjectURL(fileImage);
+                const inputImg = document.createElement("img");
+                imageElement.appendChild(inputImg);
+                inputImg.setAttribute("id", "inputImg");
+                inputImg.src = imageURL;
+                note.updateImageContent(imageURL);
+            }
+        };
     });
     
     // Quote button handler

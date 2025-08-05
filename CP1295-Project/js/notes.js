@@ -19,10 +19,12 @@ export class Note {
      * @param {number} options.y - Y position on the board
      * @param {string} options.color - CSS class for note color
      * @param {Date} options.dateStamp - note's creation date and time
+     * @param {string} options.noteImage - Image uploaded onto the note
      */
-    constructor({ id = null, content = '', x = 0, y = 0, color = null, dateStamp = null}) {
+    constructor({ id = null, content = '', x = 0, y = 0, color = null, dateStamp = null, noteImage = null}) {
         this.id = id || this.generateId();
         this.dateStamp = dateStamp || this.getDateStamp();
+        this.noteImage = noteImage;
         this.content = content;
         this.x = x;
         this.y = y;
@@ -70,11 +72,19 @@ export class Note {
         noteElement.style.top = `${this.y}px`;
         noteElement.Date = this.dateStamp;
         
-        // Set content
+        // Set content (text and image)
         const contentElement = noteElement.querySelector('.note-content');
         contentElement.textContent = this.content;
         const dateElement = noteElement.querySelector('.noteDate');
-        dateElement.textContent = this.dateStamp;      
+        dateElement.textContent = this.dateStamp;  
+        const imageElement = noteElement.querySelector('.image-content');
+        if (this.noteImage) {
+            const img = document.createElement("img");
+            img.src = this.noteImage;
+            img.setAttribute("id", "inputImg");
+            imageElement.appendChild(img);
+        }
+        imageElement.src = this.noteImage;
         // Store reference to the element
         this.element = noteElement;
         return noteElement;
@@ -97,20 +107,28 @@ export class Note {
 
     /**
      * Update the note's content
+     * @param {Image} noteImage - image content
+     */
+    updateImageContent(noteImage) {
+        this.noteImage = noteImage;
+        
+        if (this.element) {
+            const contentElement = this.element.querySelector('.image-content');
+            contentElement.src = this.noteImage;
+        }
+    }
+
+    /**
+     * Update the note's content
      * @param {string} content - New content
      */
     updateContent(content) {
         this.content = content;
-        
+
         if (this.element) {
             const contentElement = this.element.querySelector('.note-content');
             contentElement.textContent = content;
         }
-    }
-
-    toArray() {
-        const noteArray = Object.values(this)
-        return noteArray;
     }
 
     /**
@@ -124,7 +142,8 @@ export class Note {
             x: this.x,
             y: this.y,
             color: this.color,
-            dateStamp: this.dateStamp
+            dateStamp: this.dateStamp,
+            noteImage: this.noteImage
         };
     }
 
@@ -208,13 +227,14 @@ export class NoteManager {
         return this.getAllNotes().map(note => note.toObject());
     }
 
+    /**
+     * Sort all notes in ascending order
+     */
     sortByAscending() {
         let oldNotes = [];
         let sortedNotes = [];
         oldNotes = this.getAllNotes();
         sortedNotes = this.getAllNotes().sort(function(a, b){return (new Date(a.dateStamp))-(new Date(b.dateStamp))});
-        console.log(oldNotes);
-        console.log(sortedNotes);
         for (let i = 0; i < oldNotes.length; i++) {
             this.removeNote(oldNotes[i].id);
         }
@@ -222,24 +242,23 @@ export class NoteManager {
             this.addNote(sortedNotes[i]);  
         }
     }
-
+    /**
+     * Sort all notes in descending order
+     */
     sortByDescending() {
         let oldNotes = [];
         let sortedNotes = [];
         oldNotes = this.getAllNotes();
         sortedNotes = this.getAllNotes().sort(function(a, b){return (new Date(b.dateStamp))-(new Date(a.dateStamp))});
-        console.log(oldNotes);
-        console.log(sortedNotes);
         for (let i = 0; i < oldNotes.length; i++) {
             this.removeNote(oldNotes[i].id);
         }
         for (let i = 0; i < sortedNotes.length; i++) {
             this.addNote(sortedNotes[i]);  
         }
+        console.log(sortedNotes);
     }
 }
-
-
 
 // Export a factory function for creating a new note
 export function createNote(options = {}) {
