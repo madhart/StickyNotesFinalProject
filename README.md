@@ -6,6 +6,6 @@ The finished project will have those functionalities listed above, as well as th
 
 The languages included in this project are limited to JavaScript, HTML, and CSS. 
 
-The learning resources I will consult are the course textbook-- Murach's JavaScript and jQuery (4th Edition) written by Mary Delamater and Zak Ruvalcaba-- as well as w3schools.
+The learning resources I will consult are the course textbook-- Murach's JavaScript and jQuery (4th Edition) written by Mary Delamater and Zak Ruvalcaba-- as well as w3schools, and one YouTube video, "How To Upload Image On Website Using JavaScript" by a channel named GreatStack.
 
 Thank you for your interest in my project :).
